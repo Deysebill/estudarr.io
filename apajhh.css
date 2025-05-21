@@ -1,0 +1,111 @@
+/* Estilos gerais */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #4CAF50, #2196F3);
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contêiner do quiz */
+.quiz-container {
+    width: 400px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    margin-top: 50px;
+}
+
+/* Pergunta */
+h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* Lista de respostas */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Alternativas */
+li {
+    background: #FF9800;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 18px;
+}
+
+li:hover {
+    background: #F57C00;
+}
+
+/* Botão de próxima pergunta */
+button {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #005f78;
+}
+
+/* Efeito de fade-in para animação */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.quiz-container {
+    animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.quiz-container {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.quiz-container {
+    width: 400px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+button {
+    background-color: #FF9800;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #F57C00;
+}
+body {
+    background: linear-gradient(to right, #4CAF50, #2196F3);
+}
+body {
+    font-family: 'Poppins', sans-serif;
+}

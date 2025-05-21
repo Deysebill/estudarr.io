@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #0b1e0b, #290421);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-container {
+            width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            color: black;
+            margin-top: 50px;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #FF9800;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 18px;
+        }
+
+        li:hover {
+            background: #0e61b9;
+        }
+
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #005f78;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2 id="question">Pergunta</h2>
+        <ul id="answers"></ul>
+        <p id="result"></p>
+        <button onclick="nextQuestion()">Próxima Pergunta</button>
+    </div>
+
+    <script>
+        const quiz = [
+            { question: "As fases da metodologia RAD estão interrelacionadas entre si no sentido que apenas quando uma fase estiver concluída, a próxima pode iniciar. Em relação às fases da metodologia de desenvolvimento RAD, selecione a opção CORRETA:", answers: ["A) A flexibilidade da metodologia RAD permite que o sequenciamento das fases envolvimento seja ignorado, desde que em algum momento elas sejam executadas;", "B) O agrupamento dos dados em objetos de negócio é feito na fase de modelagem de dados;", "C) A fase de teste da metodologia RAD deve ser aplicada apenas para a funcionalidade que foi incluída no ciclo iterativo;", "D) Em cada uma das fases da metodologia RAD, o usuário pode incluir um novo requisito.", "E) A coleta de dados é feita na fase de modelagem de negócios e serão agrupados em estrutura de negocio na fase de prototipaçao;"], correct: "B) O agrupamento dos dados em objetos de negócio é feito na fase de modelagem de dados;" },
+            { question: "Um dos princípios do RAD é “a adequação para fins comerciais é o critério essencial para aceitação de resultados”. Nesse sentido, selecione a opção CORRETA:", answers: ["A) O foco deve ser voltado para cumprir os prazos pré-estabelecidos;", "B)Permite que os desenvolvedores tomem a decisão sobre a aplicação da melhores soluções para o projeto. ", "C) O foco é fazer o desenvolvimento para atender aos requisitos funcionais", "D) Significa que as melhores práticas para desenvolver um software seguro deve ser aplicadas;", "E) Este princípio garante que o produto terá menos erros e, consequentemente, terá menos vulnerabilidades;"], correct: "C) O foco é fazer o desenvolvimento para atender aos requisitos funcionais" },
+            { question: "Assinale o código Python que cria um novo arquivo, contendo uma linha", answers: ["A) f = textfile.new(“teste”) f.write(“Linha de teste” + “\n”) f.save()", "B) f = new file f.open(“teste.txt*) f.write(“Linha de teste” + “\n”) f.quit()", "C) f • create file(“teste.txt”) write(f, “Linha de teste” + “\n”) closert", "D) f= system.file.io”teste.txt” “output”) write(f, “Linha de teste\n”) quit(f)", "E) f = open(“teste.txt”,”w”) f.write(“Linha de testein”) f.close()"], correct: "E) f = open(“teste.txt”,”w”) f.write(“Linha de testein”) f.close()" },
+            { question: "No Python 3.7, a instrução que realiza a impressão de uma lista de cadeias de caracteres nomeada “y”, separando cada elemento com uma vírgula, é:", answers: ["A) print(y, ‘ , ’)", "B) print(join (y, ‘ , ’))", "C) print(‘ , ‘ .join(y))", "D) print(y % (‘ , ‘))", "E) print(y.join(‘ , ‘))"], correct: "C) print(‘ , ‘ .join(y))" },
+            { question: "Considere que temos a tabela Produto definida da seguinte forma no nosso banco de dados: CREATE TABLE Produto ( codigo INTEGER NOT NULL, nome TEXT NOT NULL, descricao TEXT) Dada as variáveis e o comando execute a seguir: >>> produto = {“cod”: 123, “nome_prod”: “Colher’”} >>> comando = “INSERT INTO PESSOA X VALUES Y;” >>> cursor.execute(comando, pessoa) Quais os valores de X e Y para que o comando execute seja realizado com sucesso?", answers: ["A) X = vazio; Y = (:cod,:nome_prod)", "B) X = (cod, nome_prod); Y = (:cod, :nome_prod)", "C) X = vazio; Y = vazio", "D)X = (codigo, nome); Y = (:codigo, : nome) ", "E) X = (codigo, nome); Y = (icod, :nome_prod)"], correct: "E) X = (codigo, nome); Y = (icod, :nome_prod)" },
+            { question: "Considere o trecho de código a seguir, onde estamos utilizando o conector sqlite3. >>> comando = “SELECT nome FROM Pessoa;” >>> cursor.execute(comando) >>> cursor.fetchall() Dado que a consulta SQL retorna diversos registros, qual a classe dos objetos da lista retornada pelo método fetchall?", answers: ["A) list", "B) dict", "C) tuple", "D) None", "E) string"], correct: "C) tuple" },
+            { question: "A biblioteca “psycopg2” é uma interface disponível para o Python para o sistema gerenciador de banco de dados Postgre. Ela é útil para realizar operações de inserção, consulta, modificação e exclusão de dados. Os programas que a utilizam, normalmente, apresentam muitas características em comuns. Em relação a essas semelhanças, selecione a opção que apresenta quais são os itens que um código em “psycopg2” deve ter:", answers: ["A) import psycopg2, conectar ao banco, imprimir o status da conexão, executar uma instrução sal, confirmar a instrução e fechar a conexão com o banco de dados.", "B) Import psycopg2, conectar ao banco, abrir a conexão, executar uma nstrução sal, confirmar a instrução e fechar o banco de dados", "C) import psycopg2, conectar ao banco, abrir o cursor, executar uma instrução sal, confirmar a instrução e fechar a conexão com o banco de dados.", "D) import psycopg2, conectar ao banco, executar uma instrução sal, recuperar o estado da execução da instrução, confirmar a instrução e fechar a conexão com o banco de dados.", "E) import psycopg2, conectar ao banco, executar uma instrução sql, confirmar a instrução, imprimir o estado da execução, fechar a conexão com o banco de dados."], correct: "C) import psycopg2, conectar ao banco, abrir o cursor, executar uma instrução sal, confirmar a instrução e fechar a conexão com o banco de dados." },
+            { question: "Considere o fragmento de código Python abaixo que utiliza a biblioteca psycopg2 para fazer operações no sistema gerenciador de banco de dados Postgre: 1. import psycopg2 conn = psycopg2.connect(database = “postgres”, user = “postgres”, password = “senha123”, host = “127.0.0.1”, port = “5432”) 3. cur = conn.cursor() 4. cur.execute(“’’’select * from public.“AGENDA” where “telefone”=‘02188888888 ‘’’ 5. registro = cur. lacuna_*( 6. conn.commit() 7. conn.close() Para que o código seja compilado e executado corretamente e, além disso, retorne todos os registros que satisfaçam a condição dada, é necessário substituir a palavra lacuna_I por:", answers: ["A) fecthary", "B) fetchall", "C) qryselect", "D) fetchone", "E) fetchmany"], correct: "B) fetchall" },
+            { question: "O levantamento de requisitos é uma etapa fundamental do ciclo de vida de um sistema, pois é nessa etapa que são identificadas as necessidades do sistema. Uma das técnicas que auxiliam no levantamento de requisitos é a de entrevistas. A respeito das técnicas utilizadas para otimizar os resultados obtidos pelas entrevistas, selecione a opção CORRETA:", answers: ["A) O brainstorming estimula que as partes interessadas apresentem suas ideias sobre o sistema e como devem ser priorizadas.", "B) Os casos de uso são usados para descrever como os usuários devem usar o sistema.", "C) Os cenários são usados para simular situações de desastre e como os usuários devem proceder.", "D) Os grupos focais participam de debates para analisar possíveis vulnerabilidades do sistema.", "E) A observação e análise social auxilia a mapear o comportamento do usuário"], correct: "E) observação e análise social auxilia a mapear o comportamento do usuário" },
+            { question: "A Modelagem de Negócios é uma das fases da RAD. Nela, aspectos como necessidade o negócio e propósito do sistema são tratadas. Nesse sentido, selecione a opção CORRETA a respeito da Modelagem de Negócios:", answers: ["A) Nela, os testes do sistema são tratados de modo a validar os requisitos do sistema.", "B) Identifica as entidades de dados e como se relacionam com o negócio.", "C) É uma fase voltada para os desenvolvedores do sistema com interações técnicas", "D) É caracterizada por um processo rígido que vai determinar como será a versão final", "E) Identifica as informações relevantes sobre o negócio"], correct: "E) Identifica as informações relevantes sobre o negócio" },
+            { question: "Um dos princípios do RAD é “É necessário que o desenvolvimento iterativo e incremental convirja para uma solução comercial”. Nesse sentido, selecione a opção CORRETA:", answer: ["A) Desde o início do desenvolvimento, deve haver foco na implementação de recursos de segurança;", "B) As iterações do projeto desenvolvido em RAD são uma garantia de que o sistema ficará de acordo com os requisitos funcionais.", "C) Apesar de desenvolver versões do sistema no curto prazo, a ideia é que ao longo das iterações e incrementos, o protótipo se aproxime cada vez mais do sistema comercial;", "D) Ao longo dos incrementos, a ideia é acrescentar funcionalidades ainda que nas versões anteriores haja questões em aberto;", "E) Os sistemas que utilizam banco de dados não se adequam ao desenvolvimento incremental, pois muitos recursos já estão implementados;"], correct: "C) Apesar de desenvolver versões do sistema no curto prazo, a ideia é que ao longo das iterações e incrementos, o protótipo se aproxime cada vez mais do sistema comercial;" },
+            { question: "A escolha da linguagem Python para um projeto RAD tem diversas justificativas, entre las está a possibilidade de usar frameworks com diversas finalidades. Entre esse rameworks, está o Django. Nesse sentido, selecione a opção CORRETA sobre framework Django:", answers: ["A) Possui licença comercial e é aplicado para aplicações WEB;", "B) Possui licença de software livre e é aplicado para aplicações GUIS;", "C) Possui licença de software comercial e é aplicado para geração de gráficos.", "D) Possui licença de software livre e é aplicado para aplicações de Ciências de Dados;", "E) Possui licença de software livre e é aplicado para aplicações WEB;"], correct: "E) Possui licença de software livre e é aplicado para aplicações WEB;" },
+            { question: "Dentre os métodos apresentados abaixo, qual método pertence ao objeto do tipo arquivo.", answers: ["A) split", "B) join", "C) replace", "D) rename", "E) read" ], correct: "E) read" },
+            { question: "Para ler o conteúdo de um arquivo nomeado file e retornar todas as linhas do arquivo como elementos de uma lista, devemos executar qual instrução?", answers: ["A) file.readline()", "B) file.read()", "C) file.readlines()", "D) file.readall()", "E) readlines(file)"], correct: "C) file.readlines()" },
+            { question: "Em alguns cursores, como o sqlite3 e o mysql-connector-python, temos acesso ao valor gerado por colunas autoincrementadas após executar o comando INSERT. Dado que cursor é um objeto do tipo Cursor e conexao é um objeto do tipo Connection, assinale a alternativa que retorna esse valor corretamente:", answers: ["A) cursor.execute", "B) cursor.lastrowid", "C) conexao.lastrowid", "D) cursor.lastrow", "E) conexao.commit"], correct: "B) cursor.lastrowid" },
+            { question: "Algumas das bibliotecas de interface gráfica disponíveis para o Python possuem portabilidade com outras bibliotecas, facilitando, assim, o trabalho do programador. Nesse sentido, selecione a opção que apresente a biblioteca de interface gráfica que é compatível com as bibliotecas Tkinter, PyQt, wxPython e Remi:", answers: ["A) PyAutoGUI", "B) Pyforms", "C) Kivy", "D) wxPython", "E) PySimpleGUI"], correct: "E) PySimpleGUI" },
+            { question: "A engenharia de requisitos trata formalmente das atividades relacionadas aos requisitos de um sistema. Nesse sentido, selecione a opção que relaciona CORRETAMENTE a atividade e o seu objetivo:", answers: ["A) Análise de requisitos: analisar a validade dos requisitos do sistema.", "B) Documentação: documentar quais são os papéis dos usuários na operação do sistema.", "C) Elicitação de requisitos: levantar as necessidades para tratar os requisitos do sistema", "D) Validação: comparar a implementação com o que foi solicitado.", "E) Gerenciamento de requisitos: gerenciar os recursos humanos do projeto."], correct: "D) Validação: comparar a implementação com o que foi solicitado."},
+            { question: "A JAD (Joint Application Development) é a principal técnica aplicada para levantamento de requisitos em projetos que utilizam RAD. A respeito da JAD, selecione a opção CORRETA:", answers: ["A) É baseada em entrevistas e dinâmicas sociais em que os usuários interagem entre si para fornecer informações relevantes para os desenvolvedores.", "B) Aumenta a colaboração entre os desenvolvedores e os usuários, uma vez que estabelece um cronograma de trabalho", "C) Devem ser aplicadas ao final de cada entrega de protótipo de modo a garantir o direcionamento correto do projeto", "D) É um conjunto eficiente de técnicas que aceleram a implementação de ideias", "E) Trata-se de oficinas de trabalho onde desenvolvedores e usuários discutem sobre o projeto e e suas necessidades."], correct: "E) Trata-se de oficinas de trabalho onde desenvolvedores e usuários discutem sobre o projeto e e suas necessidades." }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quiz.length) {
+                document.getElementById("result").textContent = ""; // Limpa o resultado anterior
+                document.getElementById("question").textContent = quiz[currentQuestionIndex].question;
+                const shuffledAnswers = quiz[currentQuestionIndex].answers.sort(() => Math.random() - 0.5);
+                const answersList = document.getElementById("answers");
+                answersList.innerHTML = "";
+                shuffledAnswers.forEach(answer => {
+                    const li = document.createElement("li");
+                    li.textContent = answer;
+                    li.onclick = () => checkAnswer(answer);
+                    answersList.appendChild(li);
+                });
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function checkAnswer(selectedAnswer) {
+            if (selectedAnswer === quiz[currentQuestionIndex].correct) {
+                document.getElementById("result").textContent = "✔️ Correto!";
+                score++;
+            } else {
+                document.getElementById("result").textContent = "❌ Errado!";
+            }
+            currentQuestionIndex++;
+        }
+
+        function showFinalScore() {
+            document.getElementById("question").textContent = "Fim do Quiz!";
+            document.getElementById("answers").innerHTML = "";
+            document.getElementById("result").textContent = `Você acertou ${score} de 18 perguntas! Nota final: ${score}`;
+        }
+
+        nextQuestion(); 
+    </script>
+</body>
+</html>
